@@ -93,7 +93,7 @@ runs:
       run: python3 "${{ github.action_path }}/scripts/bump.py"
 
     - name: Commit changed files
-      if: inputs.commit == 'true' && steps.bump.outputs.changed_files != ''
+      if: inputs.commit == 'true' && inputs.dry-run == 'false' && steps.bump.outputs.changed_files != ''
       shell: bash
       env:
         CHANGED_FILES: ${{ steps.bump.outputs.changed_files }}

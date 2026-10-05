@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "scopes": [
+    {"event": "pull_request", "actions": ["opened", "reopened", "synchronize"], "ref_pattern": "refs/heads/patch/.*"},
+    {"event": "push", "actions": [""], "ref_pattern": "refs/heads/patch/.*"}
+  ],
+  "rules": [
+    {
+      "id": "check-direct-patch-pr",
+      "event": "pull_request",
+      "actions": ["opened", "reopened", "synchronize"],
+      "from_state": "development",
+      "ref_pattern": "refs/heads/patch/[a-z0-9][a-z0-9-]*",
+      "base_ref": "refs/heads/main"
+    },
+    {
+      "id": "check-direct-patch-push",
+      "event": "push",
+      "actions": [""],
+      "from_state": "development",
+      "ref_pattern": "refs/heads/patch/[a-z0-9][a-z0-9-]*"
+    }
+  ]
+}

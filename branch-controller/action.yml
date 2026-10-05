@@ -1,0 +1,30 @@
+name: 'Branch policy dry run'
+description: 'Validate normalized events against trusted branch policy and propose operations without applying them.'
+inputs:
+  policy:
+    description: 'Path to trusted policy JSON. Do not load policy from a pull request head.'
+    required: true
+  event:
+    description: 'Path to normalized event JSON; see branch-controller/README.md.'
+    required: true
+  state:
+    description: 'Path to trusted current refs/state JSON snapshot.'
+    required: true
+outputs:
+  decision:
+    description: 'plan, noop, or deny. deny also fails the step.'
+    value: ${{ steps.plan.outputs.decision }}
+  plan:
+    description: 'Versioned dry-run JSON with reason, preconditions, and proposed operations.'
+    value: ${{ steps.plan.outputs.plan }}
+runs:
+  using: composite
+  steps:
+    - id: plan
+      shell: bash
+      env:
+        BUMPER_POLICY: ${{ inputs.policy }}
+        BUMPER_EVENT: ${{ inputs.event }}
+        BUMPER_STATE: ${{ inputs.state }}
+        BUMPER_ACTION_PATH: ${{ github.action_path }}
+      run: python3 "$BUMPER_ACTION_PATH/../scripts/branch_policy.py" "$BUMPER_POLICY" "$BUMPER_EVENT" "$BUMPER_STATE"

@@ -2,6 +2,8 @@
 
 A GitHub Action that bumps version strings across a repository with format-aware regex substitution. Handles TOML (workspace declarations + dep pins), Nix, JSON, Markdown, and generic text files.
 
+For optional branch/event policy evaluation, see the separate [branch controller dry-run prototype](branch-controller/README.md). It proposes branch and bumper inputs without applying them; the root action remains the version editor.
+
 ## Usage
 
 ```yaml

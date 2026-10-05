@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "scopes": [
+    {"event": "pull_request", "actions": ["opened", "reopened", "synchronize"], "ref_pattern": "refs/heads/(?:dev|lane)/.*"},
+    {"event": "release", "actions": ["published"], "ref_pattern": "refs/tags/v.*"}
+  ],
+  "rules": [
+    {
+      "id": "start-release-line",
+      "event": "push",
+      "actions": [""],
+      "from_state": "release-ready",
+      "ref_pattern": "refs/heads/main",
+      "create_branch": {"parent": "refs/heads/main", "target": "refs/heads/v0.3.9"},
+      "to_state": "release-development"
+    },
+    {
+      "id": "check-dev-pr",
+      "event": "pull_request",
+      "actions": ["opened", "reopened", "synchronize"],
+      "from_state": "release-development",
+      "ref_pattern": "refs/heads/dev/v(?P<version>[0-9]+\\.[0-9]+\\.[0-9]+)-dev\\.[0-9]+",
+      "base_ref": "refs/heads/v{version}"
+    },
+    {
+      "id": "check-optional-lane-pr",
+      "event": "pull_request",
+      "actions": ["opened", "reopened", "synchronize"],
+      "from_state": "release-development",
+      "ref_pattern": "refs/heads/lane/v(?P<version>[0-9]+\\.[0-9]+\\.[0-9]+)-dev\\.(?P<iteration>[0-9]+)/[a-z0-9-]+",
+      "base_ref": "refs/heads/dev/v{version}-dev.{iteration}"
+    },
+    {
+      "id": "propose-dev-after-release",
+      "event": "release",
+      "actions": ["published"],
+      "from_state": "release-development",
+      "ref_pattern": "refs/tags/v(?P<version>[0-9]+\\.[0-9]+\\.[0-9]+)",
+      "create_branch": {"parent": "refs/heads/v{version}", "target": "refs/heads/dev/v{version}-dev.0"},
+      "bump": {"from": "{version}", "to": "{version}-dev.0"},
+      "to_state": "development"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "repository": "example/project",
+  "revision": "snapshot-7",
+  "phase": "release-development",
+  "refs": {
+    "refs/heads/main": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "refs/heads/v0.3.9": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "refs/heads/dev/v0.3.9-dev.6": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "refs/heads/lane/v0.3.9-dev.6/docs": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "refs/heads/patch/fix-links": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "refs/heads/topic/unrelated": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "refs/tags/v0.3.9": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "applied_keys": [],
+  "writer": null
+}

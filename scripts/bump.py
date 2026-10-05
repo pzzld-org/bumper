@@ -253,6 +253,8 @@ def main() -> None:
 
 def _write_output(changed_files: str, dry_run: bool) -> None:
     """Write the changed_files output to GITHUB_OUTPUT (no-op outside Actions)."""
+    if dry_run:
+        changed_files = ""
     github_output = os.environ.get("GITHUB_OUTPUT", "")
     if not github_output:
         return
